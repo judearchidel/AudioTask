@@ -1,0 +1,46 @@
+.Audio {
+    display: flex;
+    align-items: center;
+    @mixin displayInRow(){
+        display: flex;
+        flex-direction: row; 
+    }
+   .AudioPlayer{
+        margin: auto;
+        width: 60%;
+        height: 100%;
+        padding: 20px;
+        background-color: blue;
+        background-image: linear-gradient(to right,#4287f5, #42f59e);
+        .DisplyTime{
+          @include displayInRow();
+          justify-content: space-around;
+        }
+        .Controls{
+            @include displayInRow();
+            justify-content: center;
+            padding: 20px;
+            .Button{
+                background: transparent;
+                border: none;
+                padding-left: 20px;
+                .Icon {
+                    font-size: 20px;
+                }
+                &:focus{
+                    outline: none;
+                }
+            }
+        }
+        .SeekBar {
+            input {
+                 width: 60%;
+             }
+             input::-webkit-slider-runnable-track{
+                background-color: blue;
+             }
+        }
+
+        }
+
+}
