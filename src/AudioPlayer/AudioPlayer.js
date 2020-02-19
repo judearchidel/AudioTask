@@ -90,6 +90,9 @@ const Audio = () =>{
                         setCurrenttime(event.target.currentTime);
                         const perc= event.target.currentTime/duration;
                         setPercent(Math.floor(perc*100))
+                        if(event.target.currentTime===duration)
+                            {playStop()
+                        }
                     }}>
                     <source id="src_mp3" type="audio/mp3"  preload="metadata" src={mp3_file}/>
                     </audio>
