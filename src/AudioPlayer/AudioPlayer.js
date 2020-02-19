@@ -8,7 +8,6 @@ import { faPlayCircle, faPauseCircle, faStopCircle , faVolumeUp ,
 const Audio = () =>{
     const [duration,setDuration]=useState(0);
     const [currenttime,setCurrenttime]=useState(0);
-    const [currentTimeinMinutes, setCurrenttimeinMinutes]= useState(0)
     const [percent,setPercent] = useState(0)
     const [play,setPlay]=useState(false);
     const [mute,setmute]= useState(false);
@@ -66,8 +65,8 @@ const Audio = () =>{
     return (<div  className={classes.Audio}>
                 <div className={classes.AudioPlayer}>
                         <div className={classes.DisplyTime}>
-                                <p>{currentTimeinMinutes}<span>/</span>{(duration%60).toFixed(2)}</p> 
-                                <p>{percent.toFixed(2)} <span>%</span></p>
+                                <p>{(currenttime/60).toFixed(2)}<span>/</span>{(duration/60).toFixed(2)}</p> 
+                                <p>{percent} <span>%</span></p>
                         </div>
                         <div className={classes.Controls}>
                                 <button className={classes.Button} onClick={()=>playSong()}>
@@ -89,11 +88,8 @@ const Audio = () =>{
                     <audio id="audio_player" preload='metadata' onLoadedMetadata={event => {setTime(event.target.duration)}} 
                     onTimeUpdate={(event)=>{
                         setCurrenttime(event.target.currentTime);
-                        const minutes= Math.floor(event.target.currentTime)/60;
-                        console.log(minutes);
-                        setCurrenttimeinMinutes(0);
                         const perc= event.target.currentTime/duration;
-                        setPercent(perc*100)
+                        setPercent(Math.floor(perc*100))
                     }}>
                     <source id="src_mp3" type="audio/mp3"  preload="metadata" src={mp3_file}/>
                     </audio>

@@ -10,7 +10,6 @@
         width: 60%;
         height: 100%;
         padding: 20px;
-        background-color: blue;
         background-image: linear-gradient(to right,#4287f5, #42f59e);
         .DisplyTime{
           @include displayInRow();
@@ -35,9 +34,6 @@
         .SeekBar {
             input {
                  width: 60%;
-             }
-             input::-webkit-slider-runnable-track{
-                background-color: blue;
              }
         }
 
