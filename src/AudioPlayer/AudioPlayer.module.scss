@@ -1,6 +1,7 @@
 .Audio {
     display: flex;
     align-items: center;
+    flex-direction: column;
     @mixin displayInRow(){
         display: flex;
         flex-direction: row; 
@@ -31,12 +32,7 @@
                 }
             }
         }
-        .SeekBar {
-            input {
-                 width: 60%;
-             }
-        }
+    }
 
-        }
 
 }

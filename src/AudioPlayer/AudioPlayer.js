@@ -1,9 +1,11 @@
 import React, {useState } from 'react';
 import classes from './AudioPlayer.module.scss';
 import mp3_file from '../assets/song.mp3';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlayCircle, faPauseCircle, faStopCircle , faVolumeUp ,
-    faVolumeMute , faPlus , faMinus} from '@fortawesome/free-solid-svg-icons'
+        faVolumeMute , faPlus , faMinus} from '@fortawesome/free-solid-svg-icons';
+import SeekBar from './Seekbar/Seekbar';
+
 
 const Audio = () =>{
     const [duration,setDuration]=useState(0);
@@ -70,33 +72,36 @@ const Audio = () =>{
                         </div>
                         <div className={classes.Controls}>
                                 <button className={classes.Button} onClick={()=>playSong()}>
-                                {play?<FontAwesomeIcon icon={faPauseCircle} className={classes.Icon}/>
-                                :<FontAwesomeIcon icon={faPlayCircle}  className={classes.Icon}/>}</button>
-                                <button className={classes.Button} onClick={()=>playStop()}><FontAwesomeIcon icon={faStopCircle} className={classes.Icon}/></button>
+                                    {play?<FontAwesomeIcon icon={faPauseCircle} className={classes.Icon}/>
+                                    :<FontAwesomeIcon icon={faPlayCircle}  className={classes.Icon}/>}</button>
+                                <button className={classes.Button} onClick={()=>playStop()}>
+                                    <FontAwesomeIcon icon={faStopCircle} className={classes.Icon}/></button>
                                 <button className={classes.Button} onClick={()=>VolumeMute()}>
-                                {mute?<FontAwesomeIcon icon={faVolumeUp} className={classes.Icon}/>
-                                :<FontAwesomeIcon icon={faVolumeMute} className={classes.Icon}/>}
+                                    {mute?<FontAwesomeIcon icon={faVolumeUp} className={classes.Icon}/>
+                                    :<FontAwesomeIcon icon={faVolumeMute} className={classes.Icon}/>}
                                 </button>
-                                <button className={classes.Button} onClick={()=>VolumeControl("up")}><FontAwesomeIcon icon={faPlus} className={classes.Icon}/></button>
-                                <button className={classes.Button} onClick={()=>VolumeControl("down")}><FontAwesomeIcon icon={faMinus} className={classes.Icon}/></button>
+                                <button className={classes.Button} onClick={()=>VolumeControl("up")}>
+                                    <FontAwesomeIcon icon={faPlus} className={classes.Icon}/></button>
+                                <button className={classes.Button} onClick={()=>VolumeControl("down")}>
+                                    <FontAwesomeIcon icon={faMinus} className={classes.Icon}/></button>
                         </div>
-                        <div className={classes.SeekBar}>
-                              <input type="range" id='seek' onInput={(event)=>setPosition(event.target.value)} value={currenttime} max={duration} readOnly></input>
-                              
+                        <div className={classes.SeekBar}>   
+                        <SeekBar seek={percent} seekPos={setPosition} duration={duration}/>
                         </div>
                 
-                    <audio id="audio_player" preload='metadata' onLoadedMetadata={event => {setTime(event.target.duration)}} 
-                    onTimeUpdate={(event)=>{
-                        setCurrenttime(event.target.currentTime);
-                        const perc= event.target.currentTime/duration;
-                        setPercent(Math.floor(perc*100))
-                        if(event.target.currentTime===duration)
-                            {playStop()
-                        }
-                    }}>
-                    <source id="src_mp3" type="audio/mp3"  preload="metadata" src={mp3_file}/>
+                    <audio id="audio_player" preload='metadata'
+                        onLoadedMetadata={event => {setTime(event.target.duration)}} 
+                        onTimeUpdate={(event)=>{
+                                setCurrenttime(event.target.currentTime);
+                                const perc= event.target.currentTime/duration;
+                                setPercent(Math.floor(perc*100))
+                                if(event.target.currentTime===duration){
+                                    playStop()}
+                        }}>
+                        <source id="src_mp3" type="audio/mp3"  preload="metadata" src={mp3_file}/>
                     </audio>
                  </div>
+                 
         </div>)
 }
 
@@ -104,4 +109,9 @@ const Audio = () =>{
 export default Audio;
 
 /*<br></br>
+<input type="range" id='seek' 
+                              style={styleInput}
+                              onInput={(event)=>setPosition(event.target.value)} 
+                                value={currenttime} max={duration} readOnly></input>
+
 <progress id='seek' value={currenttime} max={duration}></progress> */
