@@ -24,11 +24,11 @@
                 background: transparent;
                 border: none;
                 padding-left: 20px;
-                .Icon {
-                    font-size: 20px;
-                }
                 &:focus{
                     outline: none;
+                }
+                .Icon {
+                    font-size: 20px;
                 }
             }
         }
