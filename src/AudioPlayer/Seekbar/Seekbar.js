@@ -5,7 +5,7 @@ import {faCircle} from '@fortawesome/free-solid-svg-icons';
 const SeekBar = (props) =>{
   
     const myref = React.createRef();
-
+/*
 const getPos= (event)=>{
     let PosX = event.nativeEvent.offsetX;
     let width = event.target.clientWidth;
@@ -14,11 +14,12 @@ const getPos= (event)=>{
     props.seekPos(position);
     }
 }
-   
+   */
     
 
 
 const dragStart = (e)=> {
+    e.preventDefault();
     var dragItem = document.getElementById("item");
     var container = document.getElementById("progress");
     dragItem.draggable = true;
@@ -28,6 +29,7 @@ const dragStart = (e)=> {
 
 
   const dragEnd=(e) => {
+      e.preventDefault()
       var container = document.getElementById("progress");
       container.removeEventListener("mousemove",drag);
       container.removeEventListener("mousedown",dragStart);
@@ -40,6 +42,7 @@ const dragStart = (e)=> {
 }
 
     const dragEndOutside=(e) => {
+        e.preventDefault();
         var container = document.getElementById("progress");
         container.removeEventListener("mousemove",drag);
         container.removeEventListener("mousedown",dragStart);
@@ -49,11 +52,10 @@ const dragStart = (e)=> {
   
 
   const drag=(e)=> {
-      
       e.preventDefault();
       var container = document.getElementById("progress");
     let width = container.clientWidth;
-
+console.log(e)
     let position = (e.offsetX/width)*props.duration;
 
     if(position!==Infinity && position!==0){
@@ -69,8 +71,8 @@ const dragStart = (e)=> {
 
 return (
 <div className={classes.Seek}>
-<div className={classes.progressbar} id ='progress' onClick={(event)=>getPos(event)} style={{width: `100%`}}
-onMouseDown={()=>dragStart()} onMouseUp={(event)=>dragEnd(event)}>
+<div className={classes.progressbar} id ='progress'  style={{width: `100%`}}
+onMouseDown={(e)=>dragStart(e)} onMouseUp={(event)=>dragEnd(event)}>
 <div className={classes.progress} id='item' style={{width: `${props.seek}%`}}   ></div>
 <span ref={myref} ><FontAwesomeIcon icon={faCircle} className={classes.Icon}/></span>
 </div>
