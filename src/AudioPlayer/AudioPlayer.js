@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useState, useEffect } from 'react';
 import classes from './AudioPlayer.module.scss';
 import mp3_file from '../assets/song.mp3';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,8 +29,9 @@ const Audio = () =>{
         iconDownclass.push(classes.fade)
      }
     const setTime= (duration)=>{
-        setDuration(duration)
+            setDuration(duration)
     }
+    
     const playSong =()=>{
         const player = document.getElementById('audio_player');
         if(!play)
@@ -73,8 +74,9 @@ const Audio = () =>{
 
     const setPosition=(value)=>{
         const player = document.getElementById('audio_player');
-        player.currentTime= value;
-        setCurrenttime(value);
+        if(value !== isNaN)
+     {   player.currentTime= value;
+        setCurrenttime(value);}
     }
   
     return (<div  className={classes.Audio}>
