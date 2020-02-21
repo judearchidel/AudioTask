@@ -27,6 +27,7 @@ const dragStart = (e)=> {
 
 
 const dragEnd=(e) => {
+    console.log("called")
       e.preventDefault()
             var container = document.getElementById("progress");
             container.removeEventListener("mousemove",drag);
@@ -43,6 +44,7 @@ const dragEnd=(e) => {
 }
 
     const dragEndOutside=(e) => {
+        console.log("called outside")
         e.preventDefault();
         var container = document.getElementById("progress");
         container.removeEventListener("mousemove",drag);
