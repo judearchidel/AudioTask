@@ -14,7 +14,20 @@ const Audio = () =>{
     const [play,setPlay]=useState(false);
     const [mute,setmute]= useState(false);
     const [volume, setVolume]= useState(0.5);
+    const [fade,setFade] = useState('');
 
+    let iconClass = classes.Icon;
+    let iconStopclass = [classes.Icon];
+    let iconUpclass = [classes.Icon];
+    let iconDownclass = [classes.Icon];
+
+    if(fade === "stop" ){
+        iconStopclass.push(classes.fade)
+     }else if(fade === "up" ){
+        iconUpclass.push(classes.fade)
+     }else if(fade === "down" ){
+        iconDownclass.push(classes.fade)
+     }
     const setTime= (duration)=>{
         setDuration(duration)
     }
@@ -66,27 +79,31 @@ const Audio = () =>{
   
     return (<div  className={classes.Audio}>
                 <div className={classes.AudioPlayer}>
+                        <p>Audio player</p>
                         <div className={classes.DisplyTime}>
                                 <p>{(currenttime/60).toFixed(2)}<span>/</span>{(duration/60).toFixed(2)}</p> 
-                                <p>{percent} <span>%</span></p>
+                                <p>{Math.floor(percent)} <span>%</span></p>
                         </div>
                         <div className={classes.Controls}>
                                 <button className={classes.Button} onClick={()=>playSong()}>
-                                    {play?<FontAwesomeIcon icon={faPauseCircle} className={classes.Icon}/>
-                                    :<FontAwesomeIcon icon={faPlayCircle}  className={classes.Icon}/>}</button>
+                                    {play?<FontAwesomeIcon icon={faPauseCircle} className={iconClass}/>
+                                    :<FontAwesomeIcon icon={faPlayCircle} className={iconClass}/>}</button>
                                 <button className={classes.Button} onClick={()=>playStop()}>
-                                    <FontAwesomeIcon icon={faStopCircle} className={classes.Icon}/></button>
+                                    <FontAwesomeIcon icon={faStopCircle} className={iconStopclass.join(' ')}  onClick={() => setFade("stop")}
+                                    onAnimationEnd={() => setFade("")}/></button>
                                 <button className={classes.Button} onClick={()=>VolumeMute()}>
-                                    {mute?<FontAwesomeIcon icon={faVolumeUp} className={classes.Icon}/>
-                                    :<FontAwesomeIcon icon={faVolumeMute} className={classes.Icon}/>}
+                                    {mute?<FontAwesomeIcon icon={faVolumeUp} className={iconClass}/>
+                                    :<FontAwesomeIcon icon={faVolumeMute} className={iconClass}/>}
                                 </button>
                                 <button className={classes.Button} onClick={()=>VolumeControl("up")}>
-                                    <FontAwesomeIcon icon={faPlus} className={classes.Icon}/></button>
+                                    <FontAwesomeIcon icon={faPlus} className={iconUpclass.join(' ')}  onClick={() => setFade("up")}
+                                    onAnimationEnd={() => setFade("")}/></button>
                                 <button className={classes.Button} onClick={()=>VolumeControl("down")}>
-                                    <FontAwesomeIcon icon={faMinus} className={classes.Icon}/></button>
+                                    <FontAwesomeIcon icon={faMinus} className={iconDownclass.join(' ')}  onClick={() => setFade("down")}
+                                    onAnimationEnd={() => setFade("")}/></button>
                         </div>
                         <div className={classes.SeekBar}>   
-                        <SeekBar seek={percent} seekPos={setPosition} duration={duration}/>
+                        <SeekBar seek={percent.toFixed(3)} seekPos={setPosition} duration={duration}/>
                         </div>
                 
                     <audio id="audio_player" preload='metadata'
@@ -94,7 +111,7 @@ const Audio = () =>{
                         onTimeUpdate={(event)=>{
                                 setCurrenttime(event.target.currentTime);
                                 const perc= event.target.currentTime/duration;
-                                setPercent(Math.floor(perc*100))
+                                setPercent(perc*100)
                                 if(event.target.currentTime===duration){
                                     playStop()}
                         }}>

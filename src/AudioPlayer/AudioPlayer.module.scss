@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin: 20px;
     @mixin displayInRow(){
         display: flex;
         flex-direction: row; 
@@ -30,9 +31,18 @@
                 .Icon {
                     font-size: 20px;
                 }
+                .fade {
+                    animation: fade-in-keyframes 0.5s ease-in;
+                  }
+                  @keyframes fade-in-keyframes {
+                    from {opacity: 0}
+                    to {opacity: 1}
+                  }
+
             }
         }
     }
+    
 
 
 }
